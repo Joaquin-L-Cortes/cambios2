@@ -480,163 +480,72 @@ document.addEventListener('keydown', function(event) {
 // Inicializar la aplicación
 crearMalla();
 actualizarEstadisticas();
+// Pegue todo su script.js hasta donde termina actualizarEstadisticas()
+// Luego añada esto exactamente igual
 
-// Agrega esto debajo de las otras listas como metodosInvestigacion y sociologiasTematicas
 const teoriasSociologicas = [
-    "Georg Simmel",
-    "Estructural Funcionalismo",
-    "Etnometodología",
-    "Interaccionismo Simbólico",
-    "Anthony Giddens",
-    "Pierre Bourdieu",
-    "Fenomenología",
-    "Alfred Schütz",
-    "Norbert Elías",
-    "Erving Goffman",
-    "Raymond Williams",
-    "Jürgen Habermas",
-    "Niklas Luhmann",
-    "Teoría del Conflicto",
-    "Teoría crítica (Escuela de Frankfurt)",
-    "Escuela de Chicago",
-    "Michel Foucault",
-    "Jeffrey Alexander",
-    "Ulrich Beck",
-    "Dialéctica y Sociología",
-    "Hegel y la Sociología",
-    "Profundización en El Capital de Karl Marx",
-    "Boaventura de Sousa Santos",
-    "Georg Simmel - Zygmunt Bauman",
-    "Jean Baudrillard y Michel Maffesoli",
-    "Pierre Bourdieu - Anthony Giddens - Aproximación Comparada",
-    "Zygmunt Bauman",
-    "Contemporánea Berger y Luckmann",
-    "Teorías de la agencia",
-    "Hermenéutica y sociología",
-    "Richard Sennett",
-    "Orlando Fals Borda: Praxis, método y teoría",
-    "Teorías Sociales en el siglo 21",
-    "Sociología Relacional"
-].map(nombre => ({
-    nombre,
-    creditos: 3,
-    prerreq: ["intro_sociologia", "sociedad_xix", "software", "estructura_i", "durkheim", "marx", "weber"]
-}));
+    { nombre: "Georg Simmel", creditos: 3, prerreq: [] },
+    { nombre: "Estructural Funcionalismo", creditos: 3, prerreq: [] },
+    { nombre: "Etnometodología", creditos: 3, prerreq: [] },
+    { nombre: "Interaccionismo Simbólico", creditos: 3, prerreq: [] },
+    { nombre: "Anthony Giddens", creditos: 3, prerreq: [] },
+    { nombre: "Pierre Bourdieu", creditos: 3, prerreq: [] },
+    { nombre: "Fenomenología", creditos: 3, prerreq: [] },
+    { nombre: "Alfred Schütz", creditos: 3, prerreq: [] },
+    { nombre: "Norbert Elías", creditos: 3, prerreq: [] },
+    { nombre: "Erving Goffman", creditos: 3, prerreq: [] },
+    { nombre: "Raymond Williams", creditos: 3, prerreq: [] },
+    { nombre: "Jürgen Habermas", creditos: 3, prerreq: [] },
+    { nombre: "Niklas Luhmann", creditos: 3, prerreq: [] },
+    { nombre: "Teoría del Conflicto", creditos: 3, prerreq: [] },
+    { nombre: "Teoría crítica (Escuela de Frankfurt)", creditos: 3, prerreq: [] },
+    { nombre: "Escuela de Chicago", creditos: 3, prerreq: [] },
+    { nombre: "Michel Foucault", creditos: 3, prerreq: [] },
+    { nombre: "Jeffrey Alexander", creditos: 3, prerreq: [] },
+    { nombre: "Ulrich Beck", creditos: 3, prerreq: [] },
+    { nombre: "Dialéctica y Sociología", creditos: 3, prerreq: [] },
+    { nombre: "Hegel y la Sociología", creditos: 3, prerreq: [] },
+    { nombre: "Profundización en El Capital de Karl Marx", creditos: 3, prerreq: [] },
+    { nombre: "Boaventura de Sousa Santos", creditos: 3, prerreq: [] },
+    { nombre: "Georg Simmel - Zygmunt Bauman", creditos: 3, prerreq: [] },
+    { nombre: "Jean Baudrillard y Michel Maffesoli", creditos: 3, prerreq: [] },
+    { nombre: "Pierre Bourdieu - Anthony Giddens - Aproximación Comparada", creditos: 3, prerreq: [] },
+    { nombre: "Zygmunt Bauman", creditos: 3, prerreq: [] },
+    { nombre: "Contemporánea Berger y Luckmann", creditos: 4, prerreq: [] },
+    { nombre: "Teorías de la agencia", creditos: 4, prerreq: [] },
+    { nombre: "Hermenéutica y sociología", creditos: 3, prerreq: [] },
+    { nombre: "Richard Sennett", creditos: 4, prerreq: [] },
+    { nombre: "Orlando Fals Borda: Praxis, método y teoría", creditos: 3, prerreq: [] },
+    { nombre: "Teorías Sociales en el siglo 21", creditos: 3, prerreq: [] },
+    { nombre: "Sociología Relacional", creditos: 3, prerreq: [] },
+];
 
-let teoriasSeleccionadas = {
+let teoricasSeleccionadas = {
     "teorias_i": null,
     "teorias_ii": null,
     "teorias_iii": null
 };
 
-// Reemplaza la función crearMalla para manejar también teorías sociológicas
-function crearMalla() {
-    const contenedor = document.getElementById("malla");
-    contenedor.innerHTML = "";
-
-    Object.entries(malla).forEach(([semestre, ramos]) => {
-        const columna = document.createElement("div");
-        columna.className = "semestre";
-
-        const titulo = document.createElement("h2");
-        titulo.textContent = semestre;
-        columna.appendChild(titulo);
-
-        ramos.forEach(ramo => {
-            const div = document.createElement("div");
-            div.className = "ramo";
-            div.innerHTML = `
-                <div>${ramo.nombre}</div>
-                <div class="creditos">${ramo.creditos} créditos</div>
-            `;
-
-            const aprobado = estado[ramo.id];
-            const prerreqCumplidos = (ramo.prerreq || []).every(id => estado[id]);
-
-            if (aprobado) {
-                div.classList.add("aprobado");
-            } else if (!prerreqCumplidos && ramo.prerreq) {
-                div.classList.add("bloqueado");
-            }
-
-            div.addEventListener("click", () => {
-                if (div.classList.contains("bloqueado")) return;
-
-                if (ramo.id === "metodos_invest" && !estado[ramo.id]) {
-                    mostrarModalMetodos();
-                    return;
-                }
-
-                if (["tematicas_i", "tematicas_ii", "tematicas_iii"].includes(ramo.id) && !estado[ramo.id]) {
-                    mostrarModalTematicas(ramo.id);
-                    return;
-                }
-
-                if (["teorias_i", "teorias_ii", "teorias_iii"].includes(ramo.id) && !estado[ramo.id]) {
-                    mostrarModalTeorias(ramo.id);
-                    return;
-                }
-
-                if (ramo.id === "metodos_invest" && estado[ramo.id]) {
-                    estado[ramo.id] = false;
-                    metodoSeleccionado = null;
-                    if (ramo.nombreOriginal) {
-                        ramo.nombre = ramo.nombreOriginal;
-                    }
-                } else if (["tematicas_i", "tematicas_ii", "tematicas_iii"].includes(ramo.id) && estado[ramo.id]) {
-                    estado[ramo.id] = false;
-                    tematicasSeleccionadas[ramo.id] = null;
-                    if (ramo.nombreOriginal) {
-                        ramo.nombre = ramo.nombreOriginal;
-                    }
-                } else if (["teorias_i", "teorias_ii", "teorias_iii"].includes(ramo.id) && estado[ramo.id]) {
-                    estado[ramo.id] = false;
-                    teoriasSeleccionadas[ramo.id] = null;
-                    if (ramo.nombreOriginal) {
-                        ramo.nombre = ramo.nombreOriginal;
-                    }
-                } else {
-                    estado[ramo.id] = !estado[ramo.id];
-                }
-
-                guardarEstado();
-                crearMalla();
-                actualizarEstadisticas();
-            });
-
-            columna.appendChild(div);
-        });
-
-        contenedor.appendChild(columna);
-    });
-}
-
-// Añade esta función exactamente como está
-function mostrarModalTeorias(teoriaId) {
+function mostrarModalTeoricas(teoricaId) {
     const modal = document.getElementById('modalMetodos');
     const listaMetodos = document.getElementById('listaMetodos');
 
-    const modalHeader = document.querySelector('.modal-header h2');
-    modalHeader.textContent = 'Teoría Sociológica';
-
-    const modalBodyP = document.querySelector('.modal-body p');
-    modalBodyP.textContent = 'Seleccione Teoría Sociológica a cursar:';
-
+    // Cambiar encabezado
+    document.querySelector('.modal-header h2').textContent = 'Teoría Sociológica';
+    document.querySelector('.modal-body p').textContent = 'Seleccione Teoría Sociológica a cursar:';
     listaMetodos.innerHTML = '';
+
     const contenedor = document.createElement('div');
     contenedor.style.display = 'flex';
     contenedor.style.flexDirection = 'column';
     contenedor.style.gap = '8px';
-    contenedor.style.width = '100%';
 
-    const teoriasYaSeleccionadas = Object.values(teoriasSeleccionadas).filter(Boolean);
+    const teoriasYaSeleccionadas = Object.values(teoricasSeleccionadas).filter(Boolean);
 
     teoriasSociologicas.forEach(teoria => {
         const div = document.createElement('div');
         div.className = 'metodo-item';
         div.style.display = 'block';
-        div.style.width = '100%';
-        div.style.boxSizing = 'border-box';
 
         const prerreqCumplidos = teoria.prerreq.every(id => estado[id]);
         const yaSeleccionada = teoriasYaSeleccionadas.some(sel => sel && sel.nombre === teoria.nombre);
@@ -645,7 +554,7 @@ function mostrarModalTeorias(teoriaId) {
             div.classList.add('bloqueado');
         }
 
-        const prerreqTexto = teoria.prerreq.length > 0
+        const prerreqTexto = teoria.prerreq.length > 0 
             ? `Prerrequisitos: ${teoria.prerreq.map(id => {
                 const materia = Object.values(malla).flat().find(m => m.id === id);
                 return materia ? materia.nombre : id;
@@ -660,7 +569,7 @@ function mostrarModalTeorias(teoriaId) {
 
         if ((prerreqCumplidos || teoria.prerreq.length === 0) && !yaSeleccionada) {
             div.addEventListener('click', () => {
-                seleccionarTeoria(teoria, teoriaId);
+                seleccionarTeorica(teoria, teoricaId);
             });
         }
 
@@ -671,13 +580,12 @@ function mostrarModalTeorias(teoriaId) {
     modal.style.display = 'block';
 }
 
-// Añade esta función exactamente como está
-function seleccionarTeoria(teoria, teoriaId) {
-    teoriasSeleccionadas[teoriaId] = teoria;
-    estado[teoriaId] = true;
+function seleccionarTeorica(teoria, teoricaId) {
+    teoricasSeleccionadas[teoricaId] = teoria;
+    estado[teoricaId] = true;
 
     Object.values(malla).flat().forEach(materia => {
-        if (materia.id === teoriaId) {
+        if (materia.id === teoricaId) {
             materia.nombreOriginal = materia.nombreOriginal || materia.nombre;
             materia.nombre = `${materia.nombreOriginal} - ${teoria.nombre}`;
         }
@@ -689,31 +597,24 @@ function seleccionarTeoria(teoria, teoriaId) {
     actualizarEstadisticas();
 }
 
-// Modifica resetearMalla() agregando teoriasSeleccionadas = {...}
-function resetearMalla() {
-    if (confirm("¿Estás seguro de que deseas resetear toda la malla?")) {
-        Object.keys(estado).forEach(key => delete estado[key]);
-        metodoSeleccionado = null;
-        tematicasSeleccionadas = {
-            "tematicas_i": null,
-            "tematicas_ii": null,
-            "tematicas_iii": null
-        };
-        teoriasSeleccionadas = {
-            "teorias_i": null,
-            "teorias_ii": null,
-            "teorias_iii": null
-        };
+// Dentro de crearMalla, añade esta lógica como ya tienes para tematicas
+// Justo dentro del evento de click de cada ramo:
 
-        Object.values(malla).flat().forEach(materia => {
-            if (materia.nombreOriginal) {
-                materia.nombre = materia.nombreOriginal;
-                delete materia.nombreOriginal;
-            }
-        });
-
-        guardarEstado();
-        crearMalla();
-        actualizarEstadisticas();
+if ((ramo.id === "teorias_i" || ramo.id === "teorias_ii" || ramo.id === "teorias_iii") && !estado[ramo.id]) {
+    mostrarModalTeoricas(ramo.id);
+    return;
+}
+if ((ramo.id === "teorias_i" || ramo.id === "teorias_ii" || ramo.id === "teorias_iii") && estado[ramo.id]) {
+    estado[ramo.id] = false;
+    teoricasSeleccionadas[ramo.id] = null;
+    if (ramo.nombreOriginal) {
+        ramo.nombre = ramo.nombreOriginal;
     }
 }
+
+// Dentro de resetearMalla(), agrega:
+teoricasSeleccionadas = {
+    "teorias_i": null,
+    "teorias_ii": null,
+    "teorias_iii": null
+};
