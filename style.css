@@ -186,7 +186,7 @@ h1 {
     background: #7a9a7a;
 }
 
-/* Estilos para el modal de métodos de investigación */
+/* Estilos para los modales (métodos de investigación, sociologías temáticas y teorías sociológicas) */
 .modal {
     display: none;
     position: fixed;
@@ -253,7 +253,8 @@ h1 {
     color: #e0e0e0;
 }
 
-#listaMetodos, #listaTematicas1, #listaTematicas2, #listaTematicas3 {
+/* Estilos para las listas de opciones en los modales */
+#listaMetodos, #listaTematicas1, #listaTematicas2, #listaTematicas3, #listaTeoricas1, #listaTeoricas2, #listaTeoricas3 {
     max-height: 400px;
     overflow-y: auto;
     display: flex;
@@ -261,7 +262,8 @@ h1 {
     gap: 8px;
 }
 
-.metodo-item, .tematica-item {
+/* Estilos para los items de métodos, temáticas y teorías */
+.metodo-item, .tematica-item, .teoria-item {
     background: #646464;
     padding: 12px;
     border-radius: 5px;
@@ -273,13 +275,13 @@ h1 {
     box-sizing: border-box;
 }
 
-.metodo-item:hover, .tematica-item:hover {
+.metodo-item:hover, .tematica-item:hover, .teoria-item:hover {
     background: #747474;
     transform: translateY(-1px);
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-.metodo-item.bloqueado, .tematica-item.bloqueado {
+.metodo-item.bloqueado, .tematica-item.bloqueado, .teoria-item.bloqueado {
     background: #6b4a4a;
     border-left-color: #8a5a5a;
     color: #000000;
@@ -287,34 +289,37 @@ h1 {
     opacity: 0.7;
 }
 
-.metodo-item.bloqueado:hover, .tematica-item.bloqueado:hover {
+.metodo-item.bloqueado:hover, .tematica-item.bloqueado:hover, .teoria-item.bloqueado:hover {
     transform: none;
     box-shadow: none;
     background: #6b4a4a;
 }
 
-.metodo-nombre, .tematica-nombre {
+/* Estilos para los nombres de los items */
+.metodo-nombre, .tematica-nombre, .teoria-nombre {
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-.metodo-creditos, .tematica-creditos {
+/* Estilos para los créditos */
+.metodo-creditos, .tematica-creditos, .teoria-creditos {
     font-size: 0.9em;
     color: #b0b0b0;
     margin-bottom: 5px;
 }
 
-.metodo-item.bloqueado .metodo-creditos, .tematica-item.bloqueado .tematica-creditos {
+.metodo-item.bloqueado .metodo-creditos, .tematica-item.bloqueado .tematica-creditos, .teoria-item.bloqueado .teoria-creditos {
     color: #333333;
 }
 
-.metodo-prerreq, .tematica-prerreq {
+/* Estilos para los prerrequisitos */
+.metodo-prerreq, .tematica-prerreq, .teoria-prerreq {
     font-size: 0.8em;
     color: #a0a0a0;
     font-style: italic;
 }
 
-.metodo-item.bloqueado .metodo-prerreq, .tematica-item.bloqueado .tematica-prerreq {
+.metodo-item.bloqueado .metodo-prerreq, .tematica-item.bloqueado .tematica-prerreq, .teoria-item.bloqueado .teoria-prerreq {
     color: #333333;
 }
 
@@ -366,7 +371,7 @@ h1 {
         padding: 15px;
     }
     
-    #listaMetodos, #listaTematicas1, #listaTematicas2, #listaTematicas3 {
+    #listaMetodos, #listaTematicas1, #listaTematicas2, #listaTematicas3, #listaTeoricas1, #listaTeoricas2, #listaTeoricas3 {
         max-height: 300px;
     }
 }
@@ -390,11 +395,11 @@ h1 {
         padding: 12px;
     }
     
-    #listaMetodos, #listaTematicas1, #listaTematicas2, #listaTematicas3 {
+    #listaMetodos, #listaTematicas1, #listaTematicas2, #listaTematicas3, #listaTeoricas1, #listaTeoricas2, #listaTeoricas3 {
         max-height: 250px;
     }
     
-    .metodo-item, .tematica-item {
+    .metodo-item, .tematica-item, .teoria-item {
         padding: 10px;
         font-size: 0.9em;
     }
